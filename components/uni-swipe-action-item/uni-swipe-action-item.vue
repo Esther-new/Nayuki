@@ -3,7 +3,8 @@
 		<!-- 在微信小程序 app vue端 h5 使用wxs 实现-->
 		<!-- #ifdef APP-VUE || MP-WEIXIN || H5 -->
 		<view class="uni-swipe_content">
-			<view :data-disabled="disabled" :data-position="pos" :change:prop="swipe.sizeReady" :prop="pos" class="uni-swipe_move-box selector-query-hock move-hock" @touchstart="swipe.touchstart" @touchmove="swipe.touchmove" @touchend="swipe.touchend" @change="change">
+			<view :data-disabled="disabled" :data-position="pos" :change:prop="swipe.sizeReady" :prop="pos" class="uni-swipe_move-box selector-query-hock move-hock"
+			 @touchstart="swipe.touchstart" @touchmove="swipe.touchmove" @touchend="swipe.touchend" @change="change">
 				<view class="uni-swipe_box">
 					<slot />
 				</view>
@@ -12,7 +13,8 @@
 					<view v-for="(item,index) in options" :data-button="btn" :key="index" :style="{
 		          backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',
 		          fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
-		        }" class="uni-swipe_button button-hock" @touchstart="appTouchStart" @touchend="appTouchEnd($event,index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
+		        }"
+					 class="uni-swipe_button button-hock" @touchend="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
 				</view>
 			</view>
 		</view>
@@ -23,7 +25,8 @@
 		<view ref="selector-box-hock" class="uni-swipe_content" @horizontalpan="touchstart" @touchend="touchend">
 			<view ref="selector-button-hock" class="uni-swipe_button-group selector-query-hock move-hock" :style="{width:right+'px'}">
 				<view ref="button-hock" v-for="(item,index) in options" :key="index" :style="{
-		  backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',left: right+'px'}" class="uni-swipe_button " @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'}">{{ item.text }}</text></view>
+		  backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',left: right+'px'}"
+				 class="uni-swipe_button " @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'}">{{ item.text }}</text></view>
 			</view>
 			<view ref='selector-content-hock' class="uni-swipe_move-box selector-query-hock">
 				<view class="uni-swipe_box">
@@ -40,10 +43,12 @@
 				<view v-for="(item,index) in options" :data-button="btn" :key="index" :style="{
 		    backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',
 		    fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
-		  }" class="uni-swipe_button button-hock" @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
+		  }"
+				 class="uni-swipe_button button-hock" @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
 			</view>
-			<view ref='selector-content-hock' class="selector-query-hock" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend" :class="{'ani':uniShow}" :style="{transform:moveLeft}">
-				<view class="uni-swipe_move-box">
+			<view ref='selector-content-hock' class="selector-query-hock" @touchstart="touchstart" @touchmove="touchmove"
+			 @touchend="touchend" :class="{'ani':uniShow}" :style="{transform:moveLeft}">
+				<view class="uni-swipe_move-box"  >
 					<view class="uni-swipe_box">
 						<slot />
 					</view>
@@ -55,7 +60,8 @@
 		<view class="uni-swipe-box" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
 			<view class="viewWidth-hook">
 				<movable-area v-if="viewWidth !== 0" class="movable-area" :style="{width:(viewWidth-buttonWidth)+'px'}">
-					<movable-view class="movable-view" direction="horizontal" :animation="!transition" :style="{width:viewWidth+'px'}" :class="[transition?'transition':'']" :x="x" :disabled="disabledView" @change="onChange">
+					<movable-view class="movable-view" direction="horizontal" :animation="!transition" :style="{width:viewWidth+'px'}"
+					 :class="[transition?'transition':'']" :x="x" :disabled="disabledView" @change="onChange">
 						<view class="movable-view-box">
 							<slot></slot>
 						</view>
@@ -66,7 +72,8 @@
 				<view v-for="(item,index) in options" :data-button="btn" :key="index" :style="{
 				  backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',
 				  fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
-				}" class="uni-swipe_button button-hock" @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
+				}"
+				 class="uni-swipe_button button-hock" @click.stop="onClick(index,item)"><text class="uni-swipe_button-text" :style="{color: item.style && item.style.color ? item.style.color : '#FFFFFF',}">{{ item.text }}</text></view>
 			</view>
 		</view>
 		<!-- #endif -->
@@ -156,7 +163,7 @@
 
 	}
 </script>
-<style scoped>
+<style lang="scss" scoped>
 	.uni-swipe {
 		overflow: hidden;
 	}
@@ -250,7 +257,6 @@
 		height: 45px;
 		z-index: 2;
 	}
-
 	.transition {
 		transition: all 0.3s;
 	}
@@ -260,6 +266,5 @@
 		height: 100%;
 		background-color: #fff;
 	}
-
 	/* #endif */
 </style>
