@@ -40,10 +40,10 @@ const store = new Vuex.Store({
 		},
 		RemoveCart(state){
 			state.cart = [];
-		}
+		},
 		SetStore(state,store){
 			state.store = store;
-		}
+		},
 		
 	},
 	actions:{

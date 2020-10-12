@@ -80,6 +80,7 @@
 				],
 				menuScrollIntoView:'',
 				cateScrollTop: 0,
+				sizeCalcState:false
 			};
 		},
 		methods:{
@@ -88,11 +89,46 @@
 				console.log(this.cate)
 			},
 			tapmenu(id){
+				if(!this.sizeCalcState) {
+					this.calcSize()
+				}
 				this.cateid = id
+				this.$nextTick(() => this.cateScrollTop = this.cate.find(item => item.id == id).top)
 			},
 			handleGoodsScroll({detail}){
-				console.log(detail)
-			}
+				// console.log(detail)
+				if(!this.sizeCalcState) {
+					this.calcSize()
+				}
+				const {scrollTop} = detail
+				let tabs = this.cate.filter(item=> item.top <= scrollTop).reverse()
+				console.log(tabs)
+				if(tabs.length > 0){
+					this.currentCateId = tabs[0].id
+				}
+			},
+			calcSize() {
+				let h = 10
+				
+				let view = uni.createSelectorQuery().select('#ads')
+				view.fields({
+					size: true
+				}, data => {
+					h += Math.floor(data.height)
+				}).exec()
+				
+				this.cate.forEach(item => {
+					let view = uni.createSelectorQuery().select(`#cate-${item.id}`)
+					view.fields({
+						size: true
+					}, data => {
+						item.top = h
+						h += data.height
+						item.bottom = h
+					}).exec()
+				})
+				this.sizeCalcState = true
+			},
 		},
 		onLoad(){
 			this.init()
